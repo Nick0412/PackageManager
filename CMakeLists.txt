@@ -10,3 +10,12 @@ add_executable(MainServerTestExecutable "test/MainServerTest.cpp")
 target_include_directories(MainServerTestExecutable PUBLIC "include")
 target_link_libraries(MainServerTestExecutable DirectoryHelperLib)
 set_target_properties(MainServerTestExecutable PROPERTIES CXX_STANDARD 20)
+
+add_library(SuperLib STATIC "src/SerializationHelper.cpp")
+target_include_directories(SuperLib PUBLIC "include")
+set_target_properties(SuperLib PROPERTIES CXX_STANDARD 20)
+
+add_executable(SerializationTestExecutable "test/SerializationHelperTest.cpp")
+target_include_directories(SerializationTestExecutable PUBLIC "include")
+set_target_properties(SerializationTestExecutable PROPERTIES CXX_STANDARD 20)
+target_link_libraries(SerializationTestExecutable SuperLib)
