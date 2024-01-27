@@ -1,5 +1,6 @@
 #include "SerializationHelper.hpp"
 
+#include <cassert>
 #include <cstddef>
 #include <iostream>
 

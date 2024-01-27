@@ -1,4 +1,4 @@
-#ifndef SERIALIZATION_HELPER_HPP 
+#ifndef SERIALIZATION_HELPER_HPP
 #define SERIALIZATION_HELPER_HPP
 
 #include <cstdint>
