@@ -26,13 +26,20 @@ public:
                           std::size_t index);
   void putStringAtIndex(const std::string &value, std::size_t index);
 
-  std::byte readByteAtIndex(std::size_t index);
-  std::uint32_t read32BitUnsignedIntegerAtIndex(std::size_t index);
+  std::byte getByteAtIndex(std::size_t index);
+  std::uint32_t get32BitUnsignedIntegerAtIndex(std::size_t index);
+  std::vector<std::byte> getByteListAtIndex(std::size_t size, std::size_t index);
+  std::string getStringAtIndex(std::size_t size, std::size_t index);
 
   ByteBuffer &writeByte(std::byte value);
   ByteBuffer &write32BitUnsignedInteger(std::uint32_t value);
   ByteBuffer &writeByteList(const std::vector<std::byte> &value);
   ByteBuffer &writeString(const std::string &value);
+
+  std::byte readByte();
+  std::uint32_t read32BitUnsignedInteger();
+  std::vector<std::byte> readByteList(std::size_t size);
+  std::string readString(std::size_t size);
 };
 
 #endif

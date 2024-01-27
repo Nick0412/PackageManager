@@ -31,14 +31,29 @@ void ByteBuffer::putStringAtIndex(const std::string &value, std::size_t index) {
   }
 }
 
-std::byte ByteBuffer::readByteAtIndex(std::size_t index) {
+std::byte ByteBuffer::getByteAtIndex(std::size_t index) {
   return raw_byte_buffer[index];
 }
 
-std::uint32_t ByteBuffer::read32BitUnsignedIntegerAtIndex(std::size_t index) {
+std::uint32_t ByteBuffer::get32BitUnsignedIntegerAtIndex(std::size_t index) {
   auto it = raw_byte_buffer.begin() + index;
   std::vector<std::byte> data(it, it + 4);
   return SerializationHelper::Deserialize32BitUnsignedInt(data);
+}
+
+std::vector<std::byte> ByteBuffer::getByteListAtIndex(std::size_t size,
+                                                      std::size_t index) {
+  auto it = raw_byte_buffer.begin() + index;
+  std::vector<std::byte> data(it, it + size);
+  return data;
+}
+
+std::string ByteBuffer::getStringAtIndex(std::size_t size, std::size_t index) {
+  std::string data;
+  for (std::size_t i = index; i < index + size; ++i) {
+    data += static_cast<char>(getByteAtIndex(i));
+  }
+  return data;
 }
 
 ByteBuffer &ByteBuffer::writeByte(std::byte value) {
@@ -63,4 +78,28 @@ ByteBuffer &ByteBuffer::writeString(const std::string &value) {
   putStringAtIndex(value, position);
   position += value.size();
   return *this;
+}
+
+std::byte ByteBuffer::readByte() {
+  std::byte value = getByteAtIndex(position);
+  position += 1;
+  return value;
+}
+
+std::uint32_t ByteBuffer::read32BitUnsignedInteger() {
+  std::uint32_t value = get32BitUnsignedIntegerAtIndex(position);
+  position += 4;
+  return value;
+}
+
+std::vector<std::byte> ByteBuffer::readByteList(std::size_t size) {
+  std::vector<std::byte> value = getByteListAtIndex(size, position);
+  position += size;
+  return value;
+}
+
+std::string ByteBuffer::readString(std::size_t size) {
+  std::string value = getStringAtIndex(size, position);
+  position += size;
+  return value;
 }
