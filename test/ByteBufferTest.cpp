@@ -15,7 +15,8 @@ void TestByteBufferVectorConstructor() {
   assert(buffer.readByteAtIndex(1) == std::byte{0x34});
   assert(buffer.readByteAtIndex(4) == std::byte{0xAC});
   assert(buffer.readByteAtIndex(8) == std::byte{0x44});
-  assert(buffer.read32BitUnsignedIntegerAtIndex(4) == std::uint32_t{0x332211AC});
+  assert(buffer.read32BitUnsignedIntegerAtIndex(4) ==
+         std::uint32_t{0x332211AC});
 }
 
 void TestEndToEndByteBuffer() {
@@ -32,8 +33,27 @@ void TestEndToEndByteBuffer() {
   assert(buffer.readByteAtIndex(7) == std::byte{0x34});
 }
 
+void TestByteBufferCursor() {
+  ByteBuffer buffer{12};
+  buffer.writeByte(std::byte{26})
+      .write32BitUnsignedInteger(0x12345678)
+      .writeByteList({std::byte{0x11}, std::byte{0x22}})
+      .writeString("test");
+
+  assert(buffer.readByteAtIndex(0) == std::byte{26});
+  assert(buffer.read32BitUnsignedIntegerAtIndex(1) ==
+         std::uint32_t{0x12345678});
+  assert(buffer.readByteAtIndex(5) == std::byte{0x11});
+  assert(buffer.readByteAtIndex(6) == std::byte{0x22});
+  assert(buffer.readByteAtIndex(7) == static_cast<std::byte>('t'));
+  assert(buffer.readByteAtIndex(8) == static_cast<std::byte>('e'));
+  assert(buffer.readByteAtIndex(9) == static_cast<std::byte>('s'));
+  assert(buffer.readByteAtIndex(10) == static_cast<std::byte>('t'));
+}
+
 int main() {
   TestByteBufferVectorConstructor();
   TestEndToEndByteBuffer();
+  TestByteBufferCursor();
   return 0;
 }
