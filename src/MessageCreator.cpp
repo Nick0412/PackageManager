@@ -159,3 +159,85 @@ std::string MessageCreator::CreateHeaderFileString(const MessageData& input)
 
     return result;
 }
+
+std::string MessageCreator::GenerateBuilderFunctionDefinitions(const MessageData& input)
+{
+    std::string result;
+    result.reserve(1024);
+
+    for (auto& [name, type] : input.member_name_and_types)
+    {
+        result += std::format(BUILDER_METHOD_DEFINITION_TEMPLATE, input.message_name, name, type, ConvertPascalCaseStringToLowerSnakeCase(name));
+    }
+
+    return result;
+}
+
+std::string MessageCreator::GenerateRealConstructorParams(const MessageData& input)
+{
+    std::string result;
+    result.reserve(256);
+
+    for (auto& [name, type] : input.member_name_and_types)
+    {
+        result += std::format(BUILD_CONSTRUCTOR_REAL_PARAMS_TEMPLATE, ConvertPascalCaseStringToLowerSnakeCase(name));
+    }
+
+    // Remove the trailing characters ',' and '\n'
+    result.pop_back();
+    result.pop_back();
+
+    return result;
+}
+
+std::string MessageCreator::GenerateConstructorDefinitionParams(const MessageData& input)
+{
+    std::string result;
+    result.reserve(256);
+
+    for (auto& [name, type] : input.member_name_and_types)
+    {
+        result += std::format(CONSTRUCTOR_DEFINITION_PARAMS_TEMPLATE, type, ConvertPascalCaseStringToLowerSnakeCase(name));
+    }
+
+    // Remove the trailing characters ',' and '\n'
+    result.pop_back();
+    result.pop_back();
+
+    return result;
+}
+
+std::string MessageCreator::GenerateConstructorMemberInitializer(const MessageData& input)
+{
+    std::string result;
+    result.reserve(256);
+
+    for (auto& [name, type] : input.member_name_and_types)
+    {
+        result += std::format(CONSTRUCTOR_DEFINITION_INITIALIZER_TEMPLATE, ConvertPascalCaseStringToLowerSnakeCase(name));
+    }
+
+    // Remove trailing ',' and '\n' but add '\n' back. This is a lazy way to remove the last comma.
+    result.pop_back();
+    result.pop_back();
+    result.push_back('\n');
+
+    return result;
+}
+
+std::string MessageCreator::CreateSourceFileString(const MessageData& input)
+{
+    std::string result;
+    result.reserve(2048);
+
+    result += std::format(INCLUDE_HEADER_TEMPLATE, input.message_name);
+    result += "\n";
+    result += GenerateBuilderFunctionDefinitions(input);
+    result += std::format(BUILD_METHOD_DEFINITION_TEMPLATE, input.message_name, GenerateRealConstructorParams(input));
+    result += std::format(CONSTRUCTOR_DEFINITION_TEMPLATE, input.message_name, GenerateConstructorDefinitionParams(input), GenerateConstructorMemberInitializer(input));
+    result += std::format(STATIC_BUILDER_TEMPLATE, input.message_name);
+    result += std::format(DESERIALIZE_DEFINITION_TEMPLATE, input.message_name);
+    result += std::format(SERIALIZE_DEFINITION_TEMPLATE, input.message_name);
+
+    return result;
+}
