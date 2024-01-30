@@ -19,7 +19,7 @@ public:
         MessageData(const std::string& name, const NamedTypesList& members);
     };
 
-public:
+private:
     using ssv = std::string_view;
 
     /**
@@ -96,10 +96,11 @@ public:
     static std::string GenerateConstructorDefinitionParams(const MessageData& input);
     static std::string GenerateConstructorMemberInitializer(const MessageData& input);
 
+public:
     static std::string CreateHeaderFileString(const MessageData& input);
     static std::string CreateSourceFileString(const MessageData& input);
 
-public:
+    // This is a utility class (static like) so we do not need any instances.
     MessageCreator() = delete;
 };
 
