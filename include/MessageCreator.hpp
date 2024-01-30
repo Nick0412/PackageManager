@@ -22,6 +22,9 @@ public:
 public:
     using ssv = std::string_view;
 
+    /**
+     * Header file strings section.
+     */
     static constexpr ssv INCLUDE_GUARD_TEMPLATE = "#ifndef {0}_HPP\n#define {0}_HPP\n";
     static constexpr ssv CLASS_DECLARATION_OUTER_TEMPLATE = "class {0}\n";
     static constexpr ssv CLASS_BUILDER_DECLARATION_INNER_TEMPLATE = "\tclass {0}\n";
@@ -49,6 +52,20 @@ public:
     static constexpr ssv COMMON_INCLUDES = "#include <vector>\n#include <string>\n#include <cstddef>\n#include <cstdint>\n";
 
     /**
+     * Source file strings section.
+    */
+    static constexpr ssv INCLUDE_HEADER_TEMPLATE = "#include \"{0}.hpp\"\n";
+    static constexpr ssv BUILDER_METHOD_DEFINITION_TEMPLATE = "{0}::{0}Builder& {0}::{0}Builder::with{1}({2} {3})\n{{\n\t{3}_builder = {3};\n\treturn *this;\n}}\n\n";
+    static constexpr ssv BUILD_METHOD_DEFINITION_TEMPLATE = "{0} {0}::{0}Builder::build()\n{{\n\treturn {0}(\n{1});\n}}\n\n";
+    static constexpr ssv BUILD_CONSTRUCTOR_REAL_PARAMS_TEMPLATE = "\t\t{0}_builder,\n";
+    static constexpr ssv CONSTRUCTOR_DEFINITION_TEMPLATE = "{0}::{0}(\n{1})\n:{2}\n{{\n\n}}\n\n";
+    static constexpr ssv CONSTRUCTOR_DEFINITION_PARAMS_TEMPLATE = "\t\t{0} {1},\n";
+    static constexpr ssv CONSTRUCTOR_DEFINITION_INITIALIZER_TEMPLATE = "\t{0}{{{0}}},\n";
+    static constexpr ssv STATIC_BUILDER_TEMPLATE = "{0}::{0}Builder {0}::Builder()\n{{\n\treturn {0}::{0}Builder();\n}}\n\n";
+    static constexpr ssv DESERIALIZE_DEFINITION_TEMPLATE = "{0} {0}::Deserialize(const std::vector<std::byte>& byte_data)\n{{\n\t//TODO: Implementation here\n}}\n\n";
+    static constexpr ssv SERIALIZE_DEFINITION_TEMPLATE = "std::vector<std::byte> {0}::Serialize(const {0}& request)\n{{\n\t//TODO: Implementation here\n}}\n\n";
+
+    /**
      * @brief Converts a pascal case string into upper snake case.
      * 
      *  ex. MyCoolString -> MY_COOL_STRING
@@ -74,6 +91,10 @@ public:
     static std::string GenerateBuilderMemberDeclarations(const MessageData& input);
     static std::string GenerateBuilderMethodDeclarations(const MessageData& input);
     static std::string GenerateConstructorParams(const MessageData& input);
+    static std::string GenerateBuilderFunctionDefinitions(const MessageData& input);
+    static std::string GenerateRealConstructorParams(const MessageData& input);
+    static std::string GenerateConstructorDefinitionParams(const MessageData& input);
+    static std::string GenerateConstructorMemberInitializer(const MessageData& input);
 
     static std::string CreateHeaderFileString(const MessageData& input);
     static std::string CreateSourceFileString(const MessageData& input);
