@@ -1,6 +1,7 @@
 #ifndef FILE_METADATA_HPP
 #define FILE_METADATA_HPP
 
+#include <cstdint>
 #include <cstddef>
 #include <vector>
 #include <string>

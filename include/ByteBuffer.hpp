@@ -1,6 +1,7 @@
 #ifndef BYTE_BUFFER_HPP
 #define BYTE_BUFFER_HPP
 
+#include <cstdint>
 #include <vector>
 #include <string>
 
