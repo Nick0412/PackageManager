@@ -107,7 +107,7 @@ std::string MessageCreator::GenerateBuilderMethodDeclarations(const MessageData&
     return result;
 }
 
-std::string MessageCreator:: GenerateConstructorParams(const MessageData& input)
+std::string MessageCreator::GenerateConstructorParams(const MessageData& input)
 {
     std::string result;
     result.reserve(128);
@@ -257,7 +257,7 @@ void MessageCreator::CreateMessageFiles(const std::string& file_path_string)
     {
         auto equals_position = line.find('=');
         std::string key{line.substr(0, equals_position)};
-        std::string value{line.substr(equals_position +1 )};
+        std::string value{line.substr(equals_position + 1)};
 
         if (key == "NAME")
         {
