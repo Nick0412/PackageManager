@@ -4,6 +4,9 @@
 #include <numeric>
 #include <string>
 #include <format>
+#include <filesystem>
+#include <fstream>
+#include <iostream>
 
 MessageCreator::MessageData::MessageData(const std::string& name, const NamedTypesList& members)
 : message_name{name}, member_name_and_types{members}
@@ -240,4 +243,47 @@ std::string MessageCreator::CreateSourceFileString(const MessageData& input)
     result += std::format(SERIALIZE_DEFINITION_TEMPLATE, input.message_name);
 
     return result;
+}
+
+void MessageCreator::CreateMessageFiles(const std::string& file_path_string)
+{
+    std::filesystem::path file_path{file_path_string};
+    std::filesystem::path parent_directory{file_path.parent_path()};
+    std::cout << parent_directory << "\n";
+    std::ifstream file_stream{file_path};
+    MessageData message_data;
+
+    std::string line;
+    while (std::getline(file_stream, line))
+    {
+        auto equals_position = line.find('=');
+        std::string key{line.substr(0, equals_position)};
+        std::string value{line.substr(equals_position +1 )};
+
+        std::cout << "key: " << std::left << std::setw(20) << key <<  "value: " << value << "\n";
+
+        if (key == "NAME")
+        {
+            message_data.message_name = value;
+        }
+        else
+        {
+            message_data.member_name_and_types.push_back({key, value});
+        }
+    }
+
+    std::string header_file_name = std::format(HEADER_FILE_TEMPLATE, message_data.message_name);
+    std::string source_file_name = std::format(SOURCE_FILE_TEMPLATE, message_data.message_name);
+
+    std::filesystem::path header_file_path = parent_directory / header_file_name;
+    std::filesystem::path source_file_path = parent_directory / source_file_name;
+
+    std::cout << header_file_path << "\n";
+    std::cout << source_file_path << "\n";
+
+    std::ofstream header_stream{header_file_path};
+    std::ofstream source_stream{source_file_path};
+
+    header_stream << CreateHeaderFileString(message_data);
+    source_stream << CreateSourceFileString(message_data);
 }
