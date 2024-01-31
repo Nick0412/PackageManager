@@ -17,6 +17,7 @@ public:
 
     public:
         MessageData(const std::string& name, const NamedTypesList& members);
+        MessageData() = default;
     };
 
 private:
@@ -66,6 +67,12 @@ private:
     static constexpr ssv SERIALIZE_DEFINITION_TEMPLATE = "std::vector<std::byte> {0}::Serialize(const {0}& request)\n{{\n\t//TODO: Implementation here\n}}\n\n";
 
     /**
+     * File name templates.
+    */
+    static constexpr ssv HEADER_FILE_TEMPLATE = "{0}.hpp";
+    static constexpr ssv SOURCE_FILE_TEMPLATE = "{0}.cpp";
+
+    /**
      * @brief Converts a pascal case string into upper snake case.
      * 
      *  ex. MyCoolString -> MY_COOL_STRING
@@ -96,9 +103,11 @@ private:
     static std::string GenerateConstructorDefinitionParams(const MessageData& input);
     static std::string GenerateConstructorMemberInitializer(const MessageData& input);
 
-public:
     static std::string CreateHeaderFileString(const MessageData& input);
     static std::string CreateSourceFileString(const MessageData& input);
+
+public:
+    static void CreateMessageFiles(const std::string& file_path_string);
 
     // This is a utility class (static like) so we do not need any instances.
     MessageCreator() = delete;
