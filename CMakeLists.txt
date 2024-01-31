@@ -24,3 +24,7 @@ target_link_libraries(ByteBufferTestExecutable SuperLib)
 add_library(SuperLib STATIC "src/SerializationHelper.cpp" "src/ByteBuffer.cpp")
 target_include_directories(SuperLib PUBLIC "include")
 set_target_properties(SuperLib PROPERTIES CXX_STANDARD 20)
+
+add_executable(MessageGenerator "src/GenerateMessageFile.cpp" "src/MessageCreator.cpp")
+target_include_directories(MessageGenerator PUBLIC "include")
+set_target_properties(MessageGenerator PROPERTIES CXX_STANDARD 20)
