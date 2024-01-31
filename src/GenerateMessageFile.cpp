@@ -32,7 +32,7 @@ int main(int argc, char* argv[])
     if (argc != 2)
     {
         std::cerr << "Incorrect number of arguments. Expected 1.\n";
-        std::cerr << "./GenerateMessageFile.cpp <path to INI file>\n";
+        std::cerr << "./MessageGenerator <path to INI file>\n";
         std::exit(EXIT_FAILURE);
     } 
 
