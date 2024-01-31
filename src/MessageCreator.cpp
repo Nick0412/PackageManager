@@ -249,7 +249,6 @@ void MessageCreator::CreateMessageFiles(const std::string& file_path_string)
 {
     std::filesystem::path file_path{file_path_string};
     std::filesystem::path parent_directory{file_path.parent_path()};
-    std::cout << parent_directory << "\n";
     std::ifstream file_stream{file_path};
     MessageData message_data;
 
@@ -259,8 +258,6 @@ void MessageCreator::CreateMessageFiles(const std::string& file_path_string)
         auto equals_position = line.find('=');
         std::string key{line.substr(0, equals_position)};
         std::string value{line.substr(equals_position +1 )};
-
-        std::cout << "key: " << std::left << std::setw(20) << key <<  "value: " << value << "\n";
 
         if (key == "NAME")
         {
@@ -277,9 +274,6 @@ void MessageCreator::CreateMessageFiles(const std::string& file_path_string)
 
     std::filesystem::path header_file_path = parent_directory / header_file_name;
     std::filesystem::path source_file_path = parent_directory / source_file_name;
-
-    std::cout << header_file_path << "\n";
-    std::cout << source_file_path << "\n";
 
     std::ofstream header_stream{header_file_path};
     std::ofstream source_stream{source_file_path};
