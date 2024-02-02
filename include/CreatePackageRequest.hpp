@@ -66,6 +66,10 @@ public:
         std::vector<FileMetadata> static_lib_files,
         std::vector<FileMetadata> shared_lib_files);
 
+    std::string getPackageName() const;
+    std::vector<FileMetadata> getHeaderFiles();
+
+    std::uint32_t size() const;
 };
 
 #endif

@@ -11,7 +11,8 @@
  * @brief This class is meant to represent a raw list of bytes. It can be used
  * to
  */
-class ByteBuffer {
+class ByteBuffer 
+{
 private:
   std::vector<std::byte> raw_byte_buffer;
   std::size_t position;
@@ -32,15 +33,18 @@ public:
   std::vector<std::byte> getByteListAtIndex(std::size_t size, std::size_t index);
   std::string getStringAtIndex(std::size_t size, std::size_t index);
 
-  ByteBuffer &writeByte(std::byte value);
-  ByteBuffer &write32BitUnsignedInteger(std::uint32_t value);
-  ByteBuffer &writeByteList(const std::vector<std::byte> &value);
-  ByteBuffer &writeString(const std::string &value);
+  ByteBuffer& writeByte(std::byte value);
+  ByteBuffer& write32BitUnsignedInteger(std::uint32_t value);
+  ByteBuffer& writeByteList(const std::vector<std::byte>& value);
+  ByteBuffer& writeString(const std::string& value);
+  ByteBuffer& writeByteBuffer(const ByteBuffer& byte_buffer);
 
   std::byte readByte();
   std::uint32_t read32BitUnsignedInteger();
   std::vector<std::byte> readByteList(std::size_t size);
   std::string readString(std::size_t size);
+
+  std::vector<std::byte>& getRawByteBuffer();
 };
 
 #endif

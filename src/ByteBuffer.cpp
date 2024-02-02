@@ -103,3 +103,15 @@ std::string ByteBuffer::readString(std::size_t size) {
   position += size;
   return value;
 }
+
+ByteBuffer& ByteBuffer::writeByteBuffer(const ByteBuffer& byte_buffer)
+{
+    putByteListAtIndex(byte_buffer.raw_byte_buffer, position);
+    position += byte_buffer.raw_byte_buffer.size();
+    return *this;
+}
+
+std::vector<std::byte>& ByteBuffer::getRawByteBuffer()
+{
+    return raw_byte_buffer;
+}

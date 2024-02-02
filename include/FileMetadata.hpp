@@ -19,8 +19,11 @@ public:
                std::uint32_t file_size, std::vector<std::byte> &file_contents);
 
   std::size_t size() const;
-  static FileMetadata Deserialize(const ByteBuffer &byte_buffer);
+  static FileMetadata Deserialize(ByteBuffer &byte_buffer);
   static ByteBuffer Serialize(const FileMetadata &metadata);
+
+  std::string getFileName();
+  std::vector<std::byte> getFileContents();
 };
 
 #endif

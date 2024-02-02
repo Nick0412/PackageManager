@@ -129,3 +129,8 @@ There are no additional message contents for this API.
 - Client
   - Client creates local cache directories like (/Users/nick/.CppCache)
   - Cache should have similar directories e.g. include, static libs, shared libs
+
+
+## TODOs
+- Document executable programs better in CMake and the code.
+- Get doxygen installed to generate rich documentation from code comments.

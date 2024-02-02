@@ -10,3 +10,4 @@ build/
 *.exe
 
 .cache
+.DS_Store
