@@ -28,3 +28,37 @@ std::uint32_t SerializationHelper::Deserialize32BitUnsignedInt(const std::vector
 
     return ntohl(network_byte_order_number);
 }
+
+std::vector<std::byte> SerializationHelper::SerializeString(const std::string& value)
+{
+    std::vector<std::byte> ret;
+
+    for (auto& c : value)
+    {
+        ret.push_back(std::byte{c});
+    }
+
+    return ret;
+}
+
+std::string SerializationHelper::DeserializeString(const std::span<std::byte>& bytes)
+{
+    std::string ret;
+    for (std::byte b : bytes)
+    {
+        ret.push_back(static_cast<char>(b));
+    }
+
+    return ret;
+}
+
+std::uint32_t SerializationHelper::Deserialize32BitUnsignedInt(const std::span<std::byte>& bytes, std::size_t position)
+{
+    std::uint32_t network_byte_order_number{0};
+    network_byte_order_number |= std::to_integer<std::uint32_t>(bytes[position + 0]) << 24;
+    network_byte_order_number |= std::to_integer<std::uint32_t>(bytes[position + 1]) << 16;
+    network_byte_order_number |= std::to_integer<std::uint32_t>(bytes[position + 2]) << 8;
+    network_byte_order_number |= std::to_integer<std::uint32_t>(bytes[position + 3]);
+
+    return ntohl(network_byte_order_number);
+}
