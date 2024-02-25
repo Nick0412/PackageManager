@@ -16,7 +16,7 @@ project(PackageManager VERSION 1)
 # target_include_directories(MessageGenerator PUBLIC "include")
 # set_target_properties(MessageGenerator PROPERTIES CXX_STANDARD 20)
 
-add_library(SuperLib STATIC "src/SerializationHelper.cpp" "src/ByteBuffer.cpp")
+add_library(SuperLib STATIC "src/SerializationHelper.cpp" "src/WriteByteBuffer.cpp" "src/ReadByteBuffer.cpp" "src/FileMetadata.cpp")
 target_include_directories(SuperLib PUBLIC "include")
 set_target_properties(SuperLib PROPERTIES CXX_STANDARD 20)
 
@@ -24,7 +24,7 @@ set_target_properties(SuperLib PROPERTIES CXX_STANDARD 20)
 # Testing section
 ################################################
 
-add_executable(SerializationHelperTestExe "test/ByteBufferTest.cpp")
-target_include_directories(SerializationHelperTestExe PUBLIC "include")
-target_link_libraries(SerializationHelperTestExe SuperLib)
-set_target_properties(SerializationHelperTestExe PROPERTIES CXX_STANDARD 20)
+add_executable(ByteBufferTestExe "test/ByteBufferTest.cpp")
+target_include_directories(ByteBufferTestExe PUBLIC "include")
+target_link_libraries(ByteBufferTestExe SuperLib)
+set_target_properties(ByteBufferTestExe PROPERTIES CXX_STANDARD 20)

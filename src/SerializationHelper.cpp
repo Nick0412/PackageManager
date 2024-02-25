@@ -35,7 +35,7 @@ std::vector<std::byte> SerializationHelper::SerializeString(const std::string& v
 
     for (auto& c : value)
     {
-        ret.push_back(std::byte{c});
+        ret.push_back(static_cast<std::byte>(c));
     }
 
     return ret;
