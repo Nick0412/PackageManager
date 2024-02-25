@@ -12,8 +12,7 @@ void ByteBuffer_Success()
     std::uint32_t expectedInt = 987654321;
     std::vector<std::byte> expectedByteList = {std::byte{0x22}, std::byte{0x44}, std::byte{0x66}, std::byte{0x88}};
     std::string expectedString = "test";
-    FileMetadata expectedFileMetadata{
-        8, "test.cpp", 10000, {std::byte{0x12}, std::byte{0x34}, std::byte{0x56}, std::byte{0x78}}};
+    FileMetadata expectedFileMetadata{"test.cpp", {std::byte{0x12}, std::byte{0x34}, std::byte{0x56}, std::byte{0x78}}};
 
     WriteByteBuffer writeBuf;
 

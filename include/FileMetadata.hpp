@@ -7,15 +7,12 @@
 class FileMetadata
 {
   private:
-    std::uint32_t file_name_length;
-    std::string file_name;
-    std::uint32_t file_size;
-    std::vector<std::byte> file_contents;
+    std::string fileName;
+    std::vector<std::byte> fileContents;
 
   public:
     FileMetadata() = delete;
-    FileMetadata(std::uint32_t file_name_length, const std::string& file_name, std::uint32_t file_size,
-                 const std::vector<std::byte>& file_contents);
+    FileMetadata(const std::string& fileName, const std::vector<std::byte>& fileContents);
 
     std::string getFileName();
     std::vector<std::byte> getFileContents();
