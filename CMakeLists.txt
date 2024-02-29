@@ -6,18 +6,19 @@ project(PackageManager VERSION 1)
 set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake" ${CMAKE_MODULE_PATH})
 include(CommonUtils)
 
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED YES)
 set(CMAKE_VERBOSE_MAKEFILE ON)
 enable_testing()
+
 find_package(GTest REQUIRED)
 
-add_library(SuperLib STATIC "src/SerializationHelper.cpp")
+add_library(SuperLib STATIC "src/Serialization/SerializationHelper.cpp")
 target_include_directories(SuperLib PUBLIC "include")
 
-# TODO: Remove this test later as it is only an example.
-create_test(TEST_NAME "Banana" SOURCES "test/Test.cpp" LIBRARIES SuperLib)
+create_test(TEST_NAME "Serialization" SOURCES "test/Serialization/SerializationHelperTest.cpp" LIBRARIES SuperLib)
 
 # TODO: Uncomment the below section later after getting all tests with gtest working.
-
 # add_executable(Bla "Test/Test.cpp")
 # target_link_libraries(Bla GTest::gtest GTest::gtest_main)
 
