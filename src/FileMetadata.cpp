@@ -7,9 +7,9 @@ FileMetadata::FileMetadata(const std::string& fileName, const std::vector<std::b
 {
 }
 
-std::string FileMetadata::getFileName() { return fileName; }
+std::string FileMetadata::getFileName() const { return fileName; }
 
-std::vector<std::byte> FileMetadata::getFileContents() { return fileContents; }
+std::vector<std::byte> FileMetadata::getFileContents() const { return fileContents; }
 
 std::vector<std::byte> FileMetadata::Serialize(const FileMetadata& metadata)
 {

@@ -13,7 +13,7 @@ enable_testing()
 
 find_package(GTest REQUIRED)
 
-add_library(SuperLib STATIC "src/SerializationHelper.cpp" "src/Serialization/SerializationHelper.cpp" "src/WriteByteBuffer.cpp" "src/ReadByteBuffer.cpp" "src/FileMetadata.cpp")
+add_library(SuperLib STATIC "src/SerializationHelper.cpp" "src/Serialization/SerializationHelper.cpp" "src/WriteByteBuffer.cpp" "src/ReadByteBuffer.cpp" "src/FileMetadata.cpp" "src/RequestHeader.cpp" "src/CreatePackageRequest.cpp")
 target_include_directories(SuperLib PUBLIC "include")
 
 create_test(TEST_NAME "Serialization" SOURCES "test/Serialization/SerializationHelperTest.cpp" LIBRARIES SuperLib)

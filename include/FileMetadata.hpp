@@ -14,8 +14,8 @@ class FileMetadata
     FileMetadata() = delete;
     FileMetadata(const std::string& fileName, const std::vector<std::byte>& fileContents);
 
-    std::string getFileName();
-    std::vector<std::byte> getFileContents();
+    std::string getFileName() const;
+    std::vector<std::byte> getFileContents() const;
 
     static std::vector<std::byte> Serialize(const FileMetadata& metadata);
     static FileMetadata Deserialize(const std::span<std::byte>& bytes);

@@ -1,5 +1,7 @@
+#include "CreatePackageRequest.hpp"
 #include "FileMetadata.hpp"
 #include "ReadByteBuffer.hpp"
+#include "RequestHeader.hpp"
 #include "SerializationHelper.hpp"
 #include "WriteByteBuffer.hpp"
 
@@ -65,9 +67,41 @@ void ByteBuffer_Success_FileMetadataList()
     assert(expectedString == actualString);
 }
 
+void ByteBuffer_Success_CreatePackageRequest()
+{
+    RequestHeader expectedHeader = RequestHeader{MessageType::CREATE_PACKAGE_REQUEST, "v1"};
+    CreatePackageRequest expectedRequest =
+        CreatePackageRequest::Builder()
+            .withPackageName("myPackage")
+            .withPackageVersion(1)
+            .withHeaderFiles({{"foo.h", {std::byte{0xA0}}}, {"bar.h", {std::byte{0xA1}}}})
+            .withStaticLibFiles({{"mystatic.a", {std::byte{0xA2}, std::byte{0xA3}}}})
+            .withSharedLibFiles({{"myshared.so", {std::byte{0xA4}}}})
+            .build();
+
+    WriteByteBuffer writeBuf;
+    writeBuf.write(expectedHeader).write(expectedRequest);
+    std::vector<std::byte> rawBytes = writeBuf.getBytes();
+
+    // simulate sending bytes over network
+
+    ReadByteBuffer readBuf{rawBytes};
+
+    // std::cout << readBuf << std::endl;
+
+    RequestHeader actualHeader = readBuf.read<RequestHeader>();
+    CreatePackageRequest actualRequest = readBuf.read<CreatePackageRequest>();
+
+    assert(expectedHeader.getMessageType() == actualHeader.getMessageType());
+    assert(expectedHeader.getProtocolVersion() == actualHeader.getProtocolVersion());
+    assert(expectedRequest.getPackageName() == expectedRequest.getPackageName());
+    assert(expectedRequest.getPackageVersion() == expectedRequest.getPackageVersion());
+}
+
 int main()
 {
     ByteBuffer_Success();
     ByteBuffer_Success_FileMetadataList();
+    ByteBuffer_Success_CreatePackageRequest();
     return 0;
 }
