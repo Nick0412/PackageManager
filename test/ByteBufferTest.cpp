@@ -15,36 +15,22 @@ void ByteBuffer_Success()
     FileMetadata expectedFileMetadata{"test.cpp", {std::byte{0x12}, std::byte{0x34}, std::byte{0x56}, std::byte{0x78}}};
 
     WriteByteBuffer writeBuf;
-
     writeBuf.write(expectedByte)
         .write(expectedInt)
         .write(expectedByteList)
         .write(expectedString)
         .write(expectedFileMetadata);
-
-    std::cout << writeBuf << std::endl;
-
     std::vector<std::byte> rawBytes = writeBuf.getBytes();
 
     // simulate sending bytes over network
 
     ReadByteBuffer readBuf{rawBytes};
 
-    std::cout << std::endl << readBuf << std::endl;
-
     std::byte actualByte = readBuf.read<std::byte>();
     std::uint32_t actualInt = readBuf.read<std::uint32_t>();
     std::vector<std::byte> actualByteList = readBuf.read<std::vector<std::byte>>();
     std::string actualString = readBuf.read<std::string>();
-
-    std::cout << std::endl << readBuf << std::endl;
-
     FileMetadata actualFileMetadata = readBuf.read<FileMetadata>();
-
-    std::cout << "File name (" << actualFileMetadata.getFileName().size() << "): " << actualFileMetadata.getFileName()
-              << std::endl;
-    for (auto b : actualFileMetadata.getFileContents())
-        std::cout << static_cast<std::uint32_t>(b) << std::endl;
 
     assert(expectedByte == actualByte);
     assert(expectedInt == actualInt);
@@ -54,8 +40,34 @@ void ByteBuffer_Success()
     assert(expectedFileMetadata.getFileContents() == actualFileMetadata.getFileContents());
 }
 
+void ByteBuffer_Success_FileMetadataList()
+{
+    FileMetadata expectedFileMetadata1{"foo.cpp", {std::byte{0xAA}}};
+    FileMetadata expectedFileMetadata2{"bar.cpp", {std::byte{0xBB}, std::byte{0xCC}, std::byte{0xDD}}};
+    std::vector<FileMetadata> expectedFileMetadataList{expectedFileMetadata1, expectedFileMetadata2};
+    std::string expectedString = "test"; // Write and read extra data to verify position pointer is incremented properly
+
+    WriteByteBuffer writeBuf;
+    writeBuf.write(expectedFileMetadataList).write(expectedString);
+    std::vector<std::byte> rawBytes = writeBuf.getBytes();
+
+    // simulate sending bytes over network
+
+    ReadByteBuffer readBuf{rawBytes};
+
+    std::vector<FileMetadata> actualFileMetadataList = readBuf.read<std::vector<FileMetadata>>();
+    std::string actualString = readBuf.read<std::string>();
+
+    assert(expectedFileMetadata1.getFileName() == actualFileMetadataList[0].getFileName());
+    assert(expectedFileMetadata1.getFileContents() == actualFileMetadataList[0].getFileContents());
+    assert(expectedFileMetadata2.getFileName() == actualFileMetadataList[1].getFileName());
+    assert(expectedFileMetadata2.getFileContents() == actualFileMetadataList[1].getFileContents());
+    assert(expectedString == actualString);
+}
+
 int main()
 {
     ByteBuffer_Success();
+    ByteBuffer_Success_FileMetadataList();
     return 0;
 }

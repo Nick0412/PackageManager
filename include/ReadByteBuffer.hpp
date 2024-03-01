@@ -4,12 +4,39 @@
 #include <span>
 
 template <typename T>
-concept Deserializable = (requires(std::span<std::byte> a) {
-                              {
-                                  T::Deserialize(a)
-                              } -> std::same_as<T>;
-                          }) || std::same_as<T, std::byte> || std::same_as<T, std::uint32_t> ||
-                         std::same_as<T, std::vector<std::byte>> || std::same_as<T, std::string>;
+struct is_vector : std::false_type {
+};
+
+template <typename T>
+struct is_vector<std::vector<T>> : std::true_type {
+};
+
+template <typename T>
+struct remove_vector {
+    using type = T;
+};
+
+template <typename T>
+struct remove_vector<std::vector<T>> {
+    using type = T;
+};
+
+template <typename T>
+using remove_vector_t = typename remove_vector<T>::type;
+
+template <typename T>
+concept PrimitiveDeserializable =
+    std::same_as<T, std::byte> || std::same_as<T, std::uint32_t> || std::same_as<T, std::string>;
+
+template <typename T>
+concept ObjectDeserializable = requires(std::span<std::byte> x) {
+                                   {
+                                       T::Deserialize(x)
+                                   } -> std::same_as<T>;
+                               };
+
+template <typename T>
+concept Deserializable = ObjectDeserializable<remove_vector_t<T>> || PrimitiveDeserializable<remove_vector_t<T>>;
 
 class ReadByteBuffer
 {
@@ -24,14 +51,30 @@ class ReadByteBuffer
     template <Deserializable T>
     T read()
     {
-        // Read the size of the object
-        std::uint32_t objectSize = read<std::uint32_t>();
+        if constexpr (is_vector<T>::value) // T is a vector
+        {
+            // Read the size of the vector
+            std::uint32_t vectorSize = read<std::uint32_t>();
 
-        // Read the object
-        auto it = dataBuffer.begin() + position;
-        std::span<std::byte> data{it, it + objectSize};
-        return T::Deserialize(data);
-    }
+            // Read each element of the vector
+            T result;
+            result.reserve(vectorSize);
+            std::generate_n(std::back_inserter(result), vectorSize, [this]() { return read<remove_vector_t<T>>(); });
+
+            return result;
+        } else // T is an object
+        {
+            // Read the size of the object
+            std::uint32_t objectSize = read<std::uint32_t>();
+
+            // Read the object
+            auto it = dataBuffer.begin() + position;
+            std::span<std::byte> data{it, it + objectSize};
+            position += objectSize;
+
+            return T::Deserialize(data);
+        }
+    };
 
     friend std::ostream& operator<<(std::ostream& os, const ReadByteBuffer& buffer);
 };

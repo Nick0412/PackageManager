@@ -32,6 +32,18 @@ class WriteByteBuffer
         return *this;
     }
 
+    template <Serializable T>
+    WriteByteBuffer& write(const std::vector<T>& data)
+    {
+        // Write the size of the data list
+        write(data.size());
+
+        // Write the data list
+        for (auto d : data)
+            write(T::Serialize(d));
+        return *this;
+    }
+
     friend std::ostream& operator<<(std::ostream& os, const WriteByteBuffer& buffer);
 };
 
