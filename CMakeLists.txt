@@ -13,7 +13,7 @@ enable_testing()
 
 find_package(GTest REQUIRED)
 
-add_library(SuperLib STATIC "src/Serialization/SerializationHelper.cpp")
+add_library(SuperLib STATIC "src/SerializationHelper.cpp" "src/Serialization/SerializationHelper.cpp" "src/WriteByteBuffer.cpp" "src/ReadByteBuffer.cpp" "src/FileMetadata.cpp")
 target_include_directories(SuperLib PUBLIC "include")
 
 create_test(TEST_NAME "Serialization" SOURCES "test/Serialization/SerializationHelperTest.cpp" LIBRARIES SuperLib)
@@ -57,3 +57,8 @@ create_test(TEST_NAME "Serialization" SOURCES "test/Serialization/SerializationH
 # add_executable(MessageGenerator "src/GenerateMessageFile.cpp" "src/MessageCreator.cpp")
 # target_include_directories(MessageGenerator PUBLIC "include")
 # set_target_properties(MessageGenerator PROPERTIES CXX_STANDARD 20)
+
+add_executable(ByteBufferTestExe "test/ByteBufferTest.cpp")
+target_include_directories(ByteBufferTestExe PUBLIC "include")
+target_link_libraries(ByteBufferTestExe SuperLib)
+set_target_properties(ByteBufferTestExe PROPERTIES CXX_STANDARD 20)

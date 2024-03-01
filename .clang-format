@@ -1,0 +1,14 @@
+---
+Language: Cpp
+BraceWrapping:
+  AfterClass: true
+  AfterControlStatement: Always
+  AfterFunction: true
+  AfterNamespace: true
+BreakBeforeBraces: Custom
+AlwaysBreakTemplateDeclarations: Yes
+ColumnLimit: 120
+IndentWidth: 4
+PointerAlignment: Left
+ReferenceAlignment: Left
+UseTab: Never
