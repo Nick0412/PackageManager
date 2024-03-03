@@ -1,5 +1,5 @@
 #include "WriteByteBuffer.hpp"
-#include "SerializationHelper.hpp"
+#include "Serialization/SerializationHelper.hpp"
 
 #include <iomanip>
 #include <vector>
@@ -15,7 +15,7 @@ WriteByteBuffer& WriteByteBuffer::write(std::byte data)
 
 WriteByteBuffer& WriteByteBuffer::write(std::uint32_t data)
 {
-    std::vector<std::byte> serializedData = SerializationHelper::Serialize32BitUnsignedInt(data);
+    std::vector<std::byte> serializedData = Serialization::Serialize32BitUnsignedInt(data);
     dataBuffer.insert(dataBuffer.end(), serializedData.begin(), serializedData.end());
     return *this;
 }

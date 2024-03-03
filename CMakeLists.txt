@@ -15,7 +15,6 @@ find_package(GTest REQUIRED)
 
 add_library(
     SuperLib STATIC 
-    "src/SerializationHelper.cpp" 
     "src/Serialization/SerializationHelper.cpp" 
     "src/WriteByteBuffer.cpp" 
     "src/ReadByteBuffer.cpp" 
@@ -27,6 +26,11 @@ target_include_directories(SuperLib PUBLIC "include")
 create_test(
     TEST_NAME "Serialization" 
     SOURCES "test/Serialization/SerializationHelperTest.cpp" 
+    LIBRARIES SuperLib)
+
+create_test(
+    TEST_NAME "WriteByteBuffer" 
+    SOURCES "test/Serialization/WriteByteBufferTest.cpp" 
     LIBRARIES SuperLib)
 
 # TODO: Uncomment the below section later after getting all tests with gtest working.

@@ -2,7 +2,6 @@
 #include "FileMetadata.hpp"
 #include "ReadByteBuffer.hpp"
 #include "RequestHeader.hpp"
-#include "SerializationHelper.hpp"
 #include "WriteByteBuffer.hpp"
 
 #include <cassert>

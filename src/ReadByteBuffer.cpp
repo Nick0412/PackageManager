@@ -1,5 +1,5 @@
 #include "ReadByteBuffer.hpp"
-#include "SerializationHelper.hpp"
+#include "Serialization/SerializationHelper.hpp"
 
 #include <iomanip>
 
@@ -18,7 +18,7 @@ std::uint32_t ReadByteBuffer::read<std::uint32_t>()
     std::vector<std::byte> data{it, it + 4};
     position += 4;
 
-    return SerializationHelper::Deserialize32BitUnsignedInt(data);
+    return Serialization::Deserialize32BitUnsignedInt(data);
 }
 
 template <>
