@@ -1,7 +1,10 @@
 #ifndef WRITE_BYTE_BUFFER_HPP
 #define WRITE_BYTE_BUFFER_HPP
 
+#include <cstdint>
+#include <concepts>
 #include <string>
+#include <vector>
 
 template <typename T>
 concept Serializable = requires(T a) {

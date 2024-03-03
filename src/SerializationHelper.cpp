@@ -1,5 +1,6 @@
 #include "SerializationHelper.hpp"
 
+#include <algorithm>
 #include <string>
 
 std::vector<std::byte> SerializationHelper::Serialize32BitUnsignedInt(std::uint32_t data)

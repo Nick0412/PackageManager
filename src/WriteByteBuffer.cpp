@@ -2,6 +2,8 @@
 #include "SerializationHelper.hpp"
 
 #include <iomanip>
+#include <vector>
+#include <algorithm>
 
 const std::vector<std::byte>& WriteByteBuffer::getBytes() { return dataBuffer; }
 

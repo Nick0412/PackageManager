@@ -1,7 +1,10 @@
 #ifndef SERIALIZATION_HELPER_HPP
 #define SERIALIZATION_HELPER_HPP
 
+#include <cstdint>
 #include <span>
+#include <string>
+#include <vector>
 
 namespace SerializationHelper
 {

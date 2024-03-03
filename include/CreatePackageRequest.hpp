@@ -3,6 +3,8 @@
 
 #include "FileMetadata.hpp"
 
+#include <cstdint>
+
 class CreatePackageRequest
 {
   private:

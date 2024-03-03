@@ -8,15 +8,26 @@ include(CommonUtils)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED YES)
-set(CMAKE_VERBOSE_MAKEFILE ON)
+# set(CMAKE_VERBOSE_MAKEFILE ON)
 enable_testing()
 
 find_package(GTest REQUIRED)
 
-add_library(SuperLib STATIC "src/SerializationHelper.cpp" "src/Serialization/SerializationHelper.cpp" "src/WriteByteBuffer.cpp" "src/ReadByteBuffer.cpp" "src/FileMetadata.cpp" "src/RequestHeader.cpp" "src/CreatePackageRequest.cpp")
+add_library(
+    SuperLib STATIC 
+    "src/SerializationHelper.cpp" 
+    "src/Serialization/SerializationHelper.cpp" 
+    "src/WriteByteBuffer.cpp" 
+    "src/ReadByteBuffer.cpp" 
+    "src/FileMetadata.cpp" 
+    "src/RequestHeader.cpp" 
+    "src/CreatePackageRequest.cpp")
 target_include_directories(SuperLib PUBLIC "include")
 
-create_test(TEST_NAME "Serialization" SOURCES "test/Serialization/SerializationHelperTest.cpp" LIBRARIES SuperLib)
+create_test(
+    TEST_NAME "Serialization" 
+    SOURCES "test/Serialization/SerializationHelperTest.cpp" 
+    LIBRARIES SuperLib)
 
 # TODO: Uncomment the below section later after getting all tests with gtest working.
 # add_executable(Bla "Test/Test.cpp")

@@ -1,7 +1,11 @@
 #ifndef READ_BYTE_BUFFER_HPP
 #define READ_BYTE_BUFFER_HPP
 
+#include <cstdint>
+#include <vector>
 #include <span>
+#include <string>
+#include <algorithm>
 
 template <typename T>
 struct is_vector : std::false_type {
