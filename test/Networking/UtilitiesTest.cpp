@@ -20,5 +20,15 @@ TEST(NetworkingUtilities, ConvertIPv4StringToArrayIncorrectFormat)
     // Expect that a `runtime_error` exception is thrown with the correct message.
     EXPECT_THAT(
         [&]() { Networking::Utilities::ConvertIPv4StringToArray(ipv4_address); },
-        ::testing::ThrowsMessage<std::runtime_error>(::testing::HasSubstr("IPv4 address has incorrect format")));
+        ::testing::ThrowsMessage<std::runtime_error>(::testing::HasSubstr("IPv4 address has incorrect format.")));
+}
+
+TEST(NetworkingUtilities, ConvertIPv4StringToArrayIncorrectBlockCount)
+{
+    const std::string ipv4_address = "192.168.0.200.50";
+
+    // Expect that a `runtime_error` exception is thrown with the correct message.
+    EXPECT_THAT(
+        [&]() { Networking::Utilities::ConvertIPv4StringToArray(ipv4_address); },
+        ::testing::ThrowsMessage<std::runtime_error>(::testing::HasSubstr("IPv4 address has an incorrect number of blocks.")));
 }
