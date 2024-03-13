@@ -19,7 +19,7 @@ TEST(NetworkingUtilities, ConvertIPv4StringToArrayIncorrectFormat)
 
     // Expect that a `runtime_error` exception is thrown with the correct message.
     EXPECT_THAT(
-        [&]() { Networking::Utilities::ConvertIPv4StringToArray(ipv4_address); },
+        [&]() { Networking::Utilities::ConvertIPv4StringToArray(ipv4_address); }, // Lambda with a reference capture
         ::testing::ThrowsMessage<std::runtime_error>(::testing::HasSubstr("IPv4 address has incorrect format.")));
 }
 
