@@ -13,6 +13,7 @@ namespace Networking::Utilities
     constexpr std::size_t IPV4_BLOCKS = 4;
 
     std::array<std::uint8_t, 4> ConvertIPv4StringToArray(const std::string& ipv4_string);
+    std::string ConvertIPv4ArrayToString(const std::array<std::uint8_t, 4>& ipv4_array);
     void ValidateIPv4StringBlocks(const std::vector<std::string>& ipv4_strings);
 }
 

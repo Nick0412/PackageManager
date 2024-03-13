@@ -32,3 +32,13 @@ TEST(NetworkingUtilities, ConvertIPv4StringToArrayIncorrectBlockCount)
         [&]() { Networking::Utilities::ConvertIPv4StringToArray(ipv4_address); },
         ::testing::ThrowsMessage<std::runtime_error>(::testing::HasSubstr("IPv4 address has an incorrect number of blocks.")));
 }
+
+TEST(NetworkingUtilities, ConvertIPv4ArrayToString)
+{
+    std::array<std::uint8_t, 4> ipv4_array = { 123, 234, 255, 99 };
+    const std::string expected = "123.234.255.99";
+
+    auto result = Networking::Utilities::ConvertIPv4ArrayToString(ipv4_array);
+
+    EXPECT_EQ(result, expected);
+}

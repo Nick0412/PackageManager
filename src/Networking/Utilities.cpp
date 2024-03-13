@@ -35,3 +35,19 @@ void Networking::Utilities::ValidateIPv4StringBlocks(const std::vector<std::stri
         }
     }
 }
+
+std::string Networking::Utilities::ConvertIPv4ArrayToString(const std::array<std::uint8_t, 4>& ipv4_array)
+{
+    std::string result;
+
+    for (auto ip_block : ipv4_array)
+    {
+        result += std::to_string(ip_block);
+        result += ".";
+    }
+
+    // Remove trailing '.' at the end.
+    result.pop_back();
+
+    return result;
+}
