@@ -20,18 +20,17 @@ add_library(
     "src/ReadByteBuffer.cpp" 
     "src/FileMetadata.cpp" 
     "src/RequestHeader.cpp" 
-    "src/CreatePackageRequest.cpp")
+    "src/CreatePackageRequest.cpp"
+
+    "src/Strings/Utilities.cpp"
+    
+    "src/Networking/Utilities.cpp")
 target_include_directories(SuperLib PUBLIC "include")
 
-create_test(
-    TEST_NAME "Serialization" 
-    SOURCES "test/Serialization/SerializationHelperTest.cpp" 
-    LIBRARIES SuperLib)
-
-create_test(
-    TEST_NAME "WriteByteBuffer" 
-    SOURCES "test/Serialization/WriteByteBufferTest.cpp" 
-    LIBRARIES SuperLib)
+create_test(TEST_NAME "Serialization" SOURCES "test/Serialization/SerializationHelperTest.cpp" LIBRARIES SuperLib)
+create_test(TEST_NAME "WriteByteBuffer" SOURCES "test/Serialization/WriteByteBufferTest.cpp" LIBRARIES SuperLib)
+create_test(TEST_NAME "StringUtilites" SOURCES "test/Strings/UtilitiesTest.cpp" LIBRARIES SuperLib) 
+create_test(TEST_NAME "NetworkingUtilites" SOURCES "test/Networking/UtilitiesTest.cpp" LIBRARIES SuperLib) 
 
 # TODO: Uncomment the below section later after getting all tests with gtest working.
 # add_executable(Bla "Test/Test.cpp")
