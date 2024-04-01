@@ -1,6 +1,6 @@
-#include "CreatePackageRequest.hpp"
-#include "ReadByteBuffer.hpp"
-#include "WriteByteBuffer.hpp"
+#include "Misc/CreatePackageRequest.hpp"
+#include "Misc/ReadByteBuffer.hpp"
+#include "Misc/WriteByteBuffer.hpp"
 
 CreatePackageRequest::CreatePackageRequest(const std::string& package_name, std::uint32_t package_version,
                                            const std::vector<FileMetadata>& header_files,

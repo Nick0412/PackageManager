@@ -1,5 +1,5 @@
 #include "gtest/gtest.h"
-#include "WriteByteBuffer.hpp"
+#include "Misc/WriteByteBuffer.hpp"
 
 class TestClassWithSerializeFunction
 {

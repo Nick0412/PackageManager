@@ -1,6 +1,6 @@
-#include "FileMetadata.hpp"
-#include "ReadByteBuffer.hpp"
-#include "WriteByteBuffer.hpp"
+#include "Misc/FileMetadata.hpp"
+#include "Misc/ReadByteBuffer.hpp"
+#include "Misc/WriteByteBuffer.hpp"
 
 FileMetadata::FileMetadata(const std::string& fileName, const std::vector<std::byte>& fileContents)
     : fileName{fileName}, fileContents{fileContents}

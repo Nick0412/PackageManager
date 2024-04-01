@@ -1,6 +1,6 @@
-#include "RequestHeader.hpp"
-#include "ReadByteBuffer.hpp"
-#include "WriteByteBuffer.hpp"
+#include "Misc/RequestHeader.hpp"
+#include "Misc/ReadByteBuffer.hpp"
+#include "Misc/WriteByteBuffer.hpp"
 
 RequestHeader::RequestHeader(const MessageType& messageType, const std::string& protocolVersion)
     : messageType{messageType}, protocolVersion{protocolVersion}

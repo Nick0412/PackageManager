@@ -5,6 +5,8 @@
 #include <cstdint>
 #include <string>
 
+using Port = std::uint16_t;
+
 class IPv4Address
 {
 private:
@@ -18,8 +20,8 @@ public:
     IPv4Address(std::uint8_t block_1, std::uint8_t block_2, std::uint8_t block_3, std::uint8_t block_4);
     IPv4Address(const IPv4Address& other);
 
-    std::string getIpAddressString();
-    std::uint8_t operator[](std::size_t index);
+    std::string getIpAddressString() const;
+    std::uint8_t operator[](std::size_t index) const;
 };
 
 #endif

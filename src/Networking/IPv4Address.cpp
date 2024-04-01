@@ -28,12 +28,12 @@ IPv4Address::IPv4Address(const IPv4Address& other)
 }
 
 
-std::string IPv4Address::getIpAddressString()
+std::string IPv4Address::getIpAddressString() const
 {
     return Networking::Utilities::ConvertIPv4ArrayToString(raw_ip_address);
 }
 
-std::uint8_t IPv4Address::operator[](std::size_t index)
+std::uint8_t IPv4Address::operator[](std::size_t index) const
 {
     if (index > Networking::Utilities::IPV4_BLOCKS)
     {

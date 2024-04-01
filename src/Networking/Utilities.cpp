@@ -1,8 +1,8 @@
 #include "Networking/Utilities.hpp"
-
 #include "Strings/Utilities.hpp"
 
 #include <stdexcept>
+#include <sys/socket.h>
 #include <format>
 
 std::array<std::uint8_t, 4> Networking::Utilities::ConvertIPv4StringToArray(const std::string& ipv4_address)
@@ -48,6 +48,51 @@ std::string Networking::Utilities::ConvertIPv4ArrayToString(const std::array<std
 
     // Remove trailing '.' at the end.
     result.pop_back();
+
+    return result;
+}
+
+void Networking::Utilities::SendDataOverNetworkSocket(int raw_socket, const std::vector<std::byte>& byte_data)
+{
+    std::size_t current_offset{0};
+    std::size_t bytes_remaining{byte_data.size()};
+    std::size_t attempts{5};
+
+    while (bytes_remaining > 0 && attempts > 0)
+    {
+        std::size_t bytes_sent = send(raw_socket, byte_data.data() + current_offset, bytes_remaining, 0);
+        if (bytes_sent == SOCKET_SEND_ERROR)
+        {
+            attempts--;
+            continue;
+        }
+
+        current_offset += bytes_sent;
+        bytes_remaining -= bytes_sent;
+        attempts = 5;
+    }
+}
+
+std::vector<std::byte> Networking::Utilities::ReceiveDataOverNetworkSocket(int raw_socket, const std::size_t number_of_bytes_to_receive)
+{
+    std::vector<std::byte> result{number_of_bytes_to_receive};
+    std::size_t current_offset{0};
+    std::size_t bytes_remaining{number_of_bytes_to_receive};
+    std::size_t attempts{5};
+
+    while (bytes_remaining > 0 && attempts > 0)
+    {
+        std::size_t bytes_received = recv(raw_socket, result.data() + current_offset, bytes_remaining, 0);
+        if (bytes_received == SOCKET_RECV_ERROR)
+        {
+            attempts--;
+            continue;
+        }
+
+        current_offset += bytes_received;
+        bytes_remaining -= bytes_received;
+        attempts = 5;
+    }
 
     return result;
 }
