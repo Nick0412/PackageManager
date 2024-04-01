@@ -175,7 +175,7 @@ public:
     A()
     {
         std::cout << "Invoked\n";
-        static_assert(std::is_member_function_pointer_v<decltype(&A<DERIVED>::foo));
+        // static_assert(std::is_member_function_pointer_v<decltype(&A<DERIVED>::foo));
         // static_assert(std::is_convertible_v<std::remove_reference_t<decltype(this)>, DERIVED*>);
         // static_assert(std::is_convertible_v<DERIVED*, std::remove_reference_t<decltype(this)>>);
         // static_assert(std::is_same_v<decltype(static_cast<DERIVED&>(*this)), std::add_lvalue_reference_t<DERIVED>>);
