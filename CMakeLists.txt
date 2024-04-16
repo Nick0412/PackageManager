@@ -36,28 +36,13 @@ add_library(
     "src/Misc/RequestHeader.cpp" 
     "src/Misc/CreatePackageRequest.cpp"
 
-    "src/Strings/Utilities.cpp"
-    
-    "src/Networking/Utilities.cpp"
-    "src/Networking/IPv4Address.cpp"
-    "src/Networking/NetworkDataSocket.cpp"
-    "src/Networking/NetworkListeningSocket.cpp"
-    "src/Networking/SocketOptions.cpp")
+    "src/Strings/Utilities.cpp")
 target_include_directories(SuperLib PUBLIC "include")
 
 ####################################################################################################
 # EXECUTABLES
 ####################################################################################################
-add_executable(ClientSocketTest "test/TodoReworkFolder/ClientSocketTest.cpp")
-target_include_directories(ClientSocketTest PUBLIC "include")
-target_link_libraries(ClientSocketTest SuperLib)
 
-add_executable(ServerSocketTest "test/TodoReworkFolder/ServerSocketTest.cpp")
-target_include_directories(ServerSocketTest PUBLIC "include")
-target_link_libraries(ServerSocketTest SuperLib)
-
-# TODO: Remove
-add_executable(NetworkingV2 "src/NetworkingV2/SocketBase.cpp")
 
 ####################################################################################################
 # TESTING SECTION       
@@ -66,11 +51,6 @@ create_test(TEST_NAME "Serialization"       SOURCES "test/Serialization/Serializ
 create_test(TEST_NAME "WriteByteBuffer"     SOURCES "test/Serialization/WriteByteBufferTest.cpp" LIBRARIES SuperLib)
 
 create_test(TEST_NAME "StringUtilites"      SOURCES "test/Strings/UtilitiesTest.cpp" LIBRARIES SuperLib) 
-
-create_test(TEST_NAME "NetworkingUtilites"  SOURCES "test/Networking/UtilitiesTest.cpp" LIBRARIES SuperLib)
-create_test(TEST_NAME "Ipv4Address"         SOURCES "test/Networking/IPv4AddressTest.cpp" LIBRARIES SuperLib) 
-
-create_test(TEST_NAME "BaseSocketInterface" SOURCES "test/NetworkingV2/BaseSocketInterfaceTest.cpp" LIBRARIES SuperLib)
 
 ####################################################################################################
 # Miscellanious section
